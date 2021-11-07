@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.wwj.mytouchevent.widget.MyLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <cn.wwj.mytouchevent.widget.MyTextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center"
+        android:text="Hello World"
+        android:textColor="@android:color/white"
+        android:textSize="38sp" />
+
+</cn.wwj.mytouchevent.widget.MyLinearLayout>
