@@ -16,5 +16,5 @@
         app:borderWidth="10dp"
         tools:currentStep="1110" />
 ```
-![Image](https://github.com/githubwwj/MyAndroid/blob/main/gif/arc_step_view_screenshot.png)
+![圆弧记步器截图](https://github.com/githubwwj/MyAndroid/blob/main/gif/arc_step_view_screenshot.png)
 
