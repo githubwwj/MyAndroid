@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <cn.wwj.customview.widget.MyTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#F44336"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:text="Hello World!"
+        app:text="Hello World Hello World"
+        app:textColor="#ffffff"
+        app:textSize="18sp" />
+
+    <cn.wwj.customview.widget.StepView
+        android:id="@+id/stepView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_margin="20dp"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="33sp"
+        app:unit="步"
+        app:borderWidth="10dp"
+        tools:currentStep="1110" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
