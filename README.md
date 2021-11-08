@@ -1,9 +1,9 @@
 # MyAndroid
-#### 安卓学习项目
+#### AAAAA  安卓学习项目
 
-#### 新增学习android事件分发项目
+#### 1 新增学习android事件分发项目
 
-#### 使用圆弧记步器
+#### 2 新增使用圆弧记步器控件
 ```
 <cn.wwj.customview.widget.StepView
         android:id="@+id/stepView"
