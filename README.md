@@ -4,6 +4,7 @@
 #### 新增学习android事件分发项目
 
 #### 使用圆弧记步器
+```
 <cn.wwj.customview.widget.StepView
         android:id="@+id/stepView"
         android:layout_width="200dp"
@@ -14,5 +15,6 @@
         app:unit="步"
         app:borderWidth="10dp"
         tools:currentStep="1110" />
+```
 ![圆弧记步器截图](https://github.com/githubwwj/MyAndroid/blob/main/gif/arc_step_view_screenshot.png)
 
