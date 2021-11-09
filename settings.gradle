@@ -10,3 +10,5 @@ rootProject.name = "MyAndroid"
 include ':app'
 include ':mytouchevent'
 include ':customview'
+include ':wordalign'
+include ':wordalign:library'
