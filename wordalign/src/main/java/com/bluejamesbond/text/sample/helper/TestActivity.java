@@ -83,24 +83,24 @@ public class TestActivity extends Activity {
         documentView.getDocumentLayoutParams().setDebugging(debugging);
         documentView.setText(article);
         documentView.setProgressBar((ProgressBar) findViewById(R.id.progressBar));
-        documentView.setFadeInDuration(800);
-        documentView.setFadeInAnimationStepDelay(30);
-        documentView.setFadeInTween(new DocumentView.ITween() {
-            @Override
-            public float get(float t, float b, float c, float d) {
-                return c * (t /= d) * t * t + b;
-            }
-        });
+        documentView.setFadeInDuration(0);
+        documentView.setFadeInAnimationStepDelay(0);
+//        documentView.setFadeInTween(new DocumentView.ITween() {
+//            @Override
+//            public float get(float t, float b, float c, float d) {
+//                return c * (t /= d) * t * t + b;
+//            }
+//        });
 
-        LinearLayout linearLayout = new LinearLayout(this);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setLayoutParams(
-                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT));
-        linearLayout.addView(documentView);
+//        LinearLayout linearLayout = new LinearLayout(this);
+//        linearLayout.setOrientation(LinearLayout.VERTICAL);
+//        linearLayout.setLayoutParams(
+//                new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+//                        LinearLayout.LayoutParams.MATCH_PARENT));
+//        linearLayout.addView(documentView);
 
         LinearLayout articleList = (LinearLayout) findViewById(R.id.articleList);
-        articleList.addView(linearLayout);
+        articleList.addView(documentView);
 
         debugging = documentView.getDocumentLayoutParams().isDebugging();
         cacheConfig = documentView.getCacheConfig().getId();

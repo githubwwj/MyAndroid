@@ -52,7 +52,7 @@ public class LineBreakTest extends TestActivity {
                         "经一定的规则在空间上排列，而不是顺序的一个接一个的排放，这就是对齐。\n");
         result.append("现代计算机\n");
         result.setSpan(new JustifiedSpan(), 0, result.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        result.setSpan(new MyLeadingMarginSpan2(2, 100), 0, result.length(),
+        result.setSpan(new MyLeadingMarginSpan2(0, 80), 0, result.length(),
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         addDocumentView(result, DocumentView.FORMATTED_TEXT);

@@ -13,5 +13,6 @@
         <attr name="unit" format="string" />
         <attr name="currentStep" format="integer" />
         <attr name="maxStep" format="integer" />
+        <attr name="isCircle" format="boolean" />
     </declare-styleable>
 </resources>

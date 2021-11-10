@@ -395,7 +395,7 @@ public class DocumentView extends ScrollView {
         }
     }
 
-    public View getViewportView(){
+    public View getViewportView() {
         return viewportView;
     }
 
@@ -473,7 +473,7 @@ public class DocumentView extends ScrollView {
                 viewportView.setMinimumHeight(layout.getMeasuredHeight());
                 measureState = MeasureTaskState.FINISH_AWAIT;
 
-                if(cacheConfig != CacheConfig.NO_CACHE){
+                if (cacheConfig != CacheConfig.NO_CACHE) {
                     allocateResources();
                 }
 
@@ -714,14 +714,14 @@ public class DocumentView extends ScrollView {
         AWAIT, FINISH, START, FINISH_AWAIT
     }
 
-    public static interface ILayoutProgressListener {
-        public void onCancelled();
+    public interface ILayoutProgressListener {
+        void onCancelled();
 
-        public void onFinish();
+        void onFinish();
 
-        public void onStart();
+        void onStart();
 
-        public void onProgressUpdate(float progress);
+        void onProgressUpdate(float progress);
     }
 
     public static interface ITween {

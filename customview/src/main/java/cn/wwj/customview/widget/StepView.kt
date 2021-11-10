@@ -8,11 +8,14 @@ import android.graphics.Rect
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.util.Log
-import android.util.TypedValue
 import android.view.animation.AccelerateInterpolator
 import androidx.appcompat.widget.AppCompatTextView
 import cn.wwj.customview.R
+import cn.wwj.customview.dp2px
 
+/**
+ * 用圆弧/或圆圈统计跑步器
+ */
 class StepView : AppCompatTextView {
 
     /**
@@ -34,7 +37,7 @@ class StepView : AppCompatTextView {
     /**
      * 设置圆弧的边框线宽度
      */
-    private var mBorderWidth: Float = dp2px(6F)
+    private var mBorderWidth: Float = dp2px(6F, resources)
 
     /**
      * 设置外部圆弧的颜色
@@ -63,14 +66,24 @@ class StepView : AppCompatTextView {
     private val TAG = javaClass.simpleName
 
     /**
-     * 圆弧起始角度
+     * 建议圆弧起始角度
      */
-    private var mStartAngle = 135F
+    private val mSuggestionStartAngle = 135F
 
     /**
-     * 圆弧从起始角度开始，扫描过的角度
+     * 建议圆弧从起始角度开始，扫描过的角度
      */
-    private var mSweepAngle = mStartAngle * 2
+    private var mSuggestionSweepAngle = mSuggestionStartAngle * 2
+
+    /**
+     * 圆弧起始角度
+     */
+    private var mStartAngle = mSuggestionStartAngle
+
+    /**
+     * 圆弧从起始角度开始，扫描过的角度,超过360度,变为一个圆圈
+     */
+    private var mSweepAngle = mSuggestionSweepAngle
 
     /**
      *  比如用于获取一个圆弧的矩形,onDraw()方法会调用多次,不必每次都创建Rect()对象
@@ -87,6 +100,11 @@ class StepView : AppCompatTextView {
      * 值动画师
      */
     private var valueAnimator: ValueAnimator? = null
+
+    /**
+     * 是否是圆圈进度条,默认false
+     */
+    private var mIsCircle: Boolean = false
 
     /**
      * 最大进度
@@ -109,6 +127,7 @@ class StepView : AppCompatTextView {
         mUnit = appearance.getString(R.styleable.StepView_unit)
         mCurrentStep = appearance.getInt(R.styleable.StepView_currentStep, 0)
         mMaxStep = appearance.getInt(R.styleable.StepView_maxStep, mMaxStep)
+        setIsCircle(appearance.getBoolean(R.styleable.StepView_isCircle, false))
 
         appearance.recycle()
 
@@ -260,6 +279,90 @@ class StepView : AppCompatTextView {
     }
 
     /**
+     * @param unit 设置单位
+     */
+    fun setUnit(unit: String?) {
+        if (mUnit == unit) {
+            return
+        }
+        mUnit = unit
+        invalidate()
+    }
+
+    /**
+     * @param outerColor
+     * 设置外部圆弧的颜色
+     */
+    fun setOuterColor(outerColor: Int) {
+        if (mOuterColor == outerColor) {
+            return
+        }
+        mOuterColor = outerColor
+        invalidate()
+    }
+
+    /**
+     * @param outerColor
+     * 设置外部圆弧的颜色
+     */
+    fun setInnerColor(innerColor: Int) {
+        if (mInnerColor == innerColor) {
+            return
+        }
+        mInnerColor = innerColor
+        invalidate()
+    }
+
+    /**
+     * 设置圆弧的边框线宽度
+     * @param borderWidth 单位px
+     */
+    fun setBorderWidth(borderWidth: Float) {
+        if (mBorderWidth == borderWidth) {
+            return
+        }
+        mBorderWidth = borderWidth
+        // 设置描边的宽度
+        mArcPaint.strokeWidth = mBorderWidth
+        invalidate()
+    }
+
+    /**
+     * 设置是否是圆圈
+     */
+    fun setIsCircle(isCircle: Boolean = false) {
+        if (isCircle == mIsCircle) {
+            return
+        }
+        this.mIsCircle = isCircle
+        if (isCircle) {
+            mStartAngle = 0F
+            // 超过360度,变为一个圆圈
+            mSweepAngle = 360F
+        } else {
+            mStartAngle = mSuggestionStartAngle
+            mSweepAngle = mSuggestionSweepAngle
+        }
+        invalidate()
+    }
+
+    /**
+     * 圆弧起始角度
+     */
+    fun setStartAngle(startAngle: Float) {
+        mStartAngle = startAngle
+        invalidate()
+    }
+
+    /**
+     * 圆弧从起始角度开始，扫描过的角度,超过360度,变为一个圆圈
+     */
+    fun setSweepAngle(sweepAngle: Float) {
+        mSweepAngle = sweepAngle
+        invalidate()
+    }
+
+    /**
      * 视图从窗口分离时
      */
     override fun onDetachedFromWindow() {
@@ -268,11 +371,6 @@ class StepView : AppCompatTextView {
         valueAnimator = null
     }
 
-    private fun dp2px(value: Float): Float {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics
-        )
-    }
 
     /**
      * 计算绘制文字时的基线到中轴线的距离
