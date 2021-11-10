@@ -30,14 +30,30 @@ class StepView : AppCompatTextView {
     private var mMaxStep: Int = 100
 
     /**
-     * 单位：步 %等
+     * 单位: 如 步  %  等等
      */
-    private var mUnit: String?
+    var mUnit: String?
+        set(value) {
+            if (field == value) {
+                return
+            }
+            field = value
+            invalidate()
+        }
 
     /**
      * 设置圆弧的边框线宽度
      */
-    private var mBorderWidth: Float = dp2px(6F, resources)
+    var mBorderWidth: Float = dp2px(6F, resources)
+        set(value) {
+            if (field == value) {
+                return
+            }
+            field = value
+            // 设置描边的宽度
+            mArcPaint.strokeWidth = field
+            invalidate()
+        }
 
     /**
      * 设置外部圆弧的颜色
@@ -279,17 +295,6 @@ class StepView : AppCompatTextView {
     }
 
     /**
-     * @param unit 设置单位
-     */
-    fun setUnit(unit: String?) {
-        if (mUnit == unit) {
-            return
-        }
-        mUnit = unit
-        invalidate()
-    }
-
-    /**
      * @param outerColor
      * 设置外部圆弧的颜色
      */
@@ -310,20 +315,6 @@ class StepView : AppCompatTextView {
             return
         }
         mInnerColor = innerColor
-        invalidate()
-    }
-
-    /**
-     * 设置圆弧的边框线宽度
-     * @param borderWidth 单位px
-     */
-    fun setBorderWidth(borderWidth: Float) {
-        if (mBorderWidth == borderWidth) {
-            return
-        }
-        mBorderWidth = borderWidth
-        // 设置描边的宽度
-        mArcPaint.strokeWidth = mBorderWidth
         invalidate()
     }
 
