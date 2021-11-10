@@ -15,4 +15,9 @@
         <attr name="maxStep" format="integer" />
         <attr name="isCircle" format="boolean" />
     </declare-styleable>
+
+
+    <declare-styleable name="LetterSlideBar">
+        <attr name="selectTextColor" format="color" />
+    </declare-styleable>
 </resources>

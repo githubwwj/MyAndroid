@@ -1,9 +1,10 @@
 package cn.wwj.customview
 
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import cn.wwj.customview.databinding.ActivityMainBinding
+import cn.wwj.customview.widget.LetterSlideBar
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +30,17 @@ class MainActivity : AppCompatActivity() {
             binding.stepView.setProgress(mProgress, 800)
         }
         binding.stepView.setMaxStep(2000)
+
+        binding.tvSlideBar.setOnLetterListener(object : LetterSlideBar.LetterTouchListener {
+            override fun setLetterTouchListener(letter: String?) {
+                if (letter.isNullOrEmpty()) {
+                    binding.tvSelectLetter.visibility = View.GONE
+                } else {
+                    binding.tvSelectLetter.visibility = View.VISIBLE
+                    binding.tvSelectLetter.text = letter
+                }
+            }
+        })
 
     }
 
