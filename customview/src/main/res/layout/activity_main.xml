@@ -27,6 +27,6 @@
         android:textSize="33sp"
         app:unit="步"
         app:borderWidth="10dp"
-        tools:currentStep="1110" />
+        tools:currentStep="10" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
