@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.stepView.setMaxStep(2000)
 
-        binding.tvSlideBar.setOnLetterListener(object : LetterSlideBar.LetterTouchListener {
+        binding.tvSlideBar.setOnLetterTouchListener(object : LetterSlideBar.LetterTouchListener {
             override fun setLetterTouchListener(letter: String?) {
                 if (letter.isNullOrEmpty()) {
                     binding.tvSelectLetter.visibility = View.GONE

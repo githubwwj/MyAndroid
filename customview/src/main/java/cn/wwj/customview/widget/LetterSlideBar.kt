@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.postDelayed
@@ -141,7 +140,10 @@ class LetterSlideBar : AppCompatTextView {
 
     private var mOnLetterTouchListener: LetterTouchListener? = null
 
-    fun setOnLetterListener(letterTouchListener: LetterTouchListener) {
+    /**
+     * 设置字母滑动监听
+     */
+    fun setOnLetterTouchListener(letterTouchListener: LetterTouchListener) {
         this.mOnLetterTouchListener = letterTouchListener
     }
 
