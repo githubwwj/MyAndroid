@@ -113,6 +113,9 @@ class LetterSlideBar : AppCompatTextView {
             // 如果是手指按下或者滑动,设置了触摸监听,获取当前触摸的字符
             MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
                 mOnLetterTouchListener?.let {
+                    if (mLetters[letterIndex] == mCurrentTouchChar) {
+                        return true
+                    }
                     mCurrentTouchChar = mLetters[letterIndex]
                     // 回调触摸监听,传递当前选中的字符并刷新界面
                     it.setLetterTouchListener(mLetters[letterIndex].toString())
