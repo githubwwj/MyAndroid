@@ -1,7 +1,10 @@
 package cn.wwj.customview
 
+import android.animation.ValueAnimator
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.animation.AccelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import cn.wwj.customview.databinding.ActivityMainBinding
 import cn.wwj.customview.widget.LetterSlideBar
@@ -13,23 +16,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var mProgress = 0
-    private var isCircle = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.stepView.setOnClickListener {
-            mProgress += 50
-            if (mProgress > 111) {
-                mProgress = 0
-                isCircle = !isCircle
-                binding.stepView.setIsCircle(isCircle)
-            }
-            binding.stepView.setProgress(mProgress, 800)
+        binding.cureProgressView.setOnClickListener {
+//            mProgress += 100
+//            if (mProgress > 100) {
+//                mProgress = 0
+//            }
+//            binding.stepView.setProgress(mProgress, 800)
+            setProgress()
         }
-        binding.stepView.setMaxStep(2000)
+        binding.cureProgressView.setMaxStep(30)
+
+
 
         binding.tvSlideBar.setOnLetterTouchListener(object : LetterSlideBar.LetterTouchListener {
             override fun setLetterTouchListener(letter: String?) {
@@ -42,6 +45,21 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+//        startActivity(Intent(this,WaveRippleActivity::class.java))
+//        finish()
+
+    }
+
+    fun setProgress() {
+        val valueAnimator = ValueAnimator.ofInt(0, 30)
+        valueAnimator?.duration = 3000
+        valueAnimator?.interpolator = AccelerateInterpolator()
+        valueAnimator?.addUpdateListener {
+            val value = it.animatedValue as Int
+            binding.cureProgressView.setCurrentStep(value)
+        }
+        valueAnimator?.startDelay = 0
+        valueAnimator?.start()
     }
 
 }
