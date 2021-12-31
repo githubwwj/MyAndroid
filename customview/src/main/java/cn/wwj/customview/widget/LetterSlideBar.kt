@@ -60,7 +60,7 @@ class LetterSlideBar : AppCompatTextView {
          * 如果控件的高度是包裹内容,字母的宽度 + 30dp
          */
         if (withMode == MeasureSpec.AT_MOST) {
-            widthSize = (paint.measureText("A") + dp2px(30F, resources)).toInt()
+            widthSize = (paint.measureText("A") + dp2px(30F)).toInt()
         }
         setMeasuredDimension(widthSize, heightSize)
     }

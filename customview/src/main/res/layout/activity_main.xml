@@ -19,17 +19,37 @@
         app:textColor="#ffffff"
         app:textSize="18sp" />
 
-    <cn.wwj.customview.widget.StepView
-        android:id="@+id/stepView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_below="@+id/myTv"
-        android:layout_margin="20dp"
-        android:textColor="@android:color/holo_red_light"
-        android:textSize="33sp"
-        app:borderWidth="10dp"
-        app:unit="步"
-        tools:currentStep="10" />
+    <cn.wwj.customview.widget.CureProgressView
+        android:id="@+id/cureProgressView"
+        android:layout_width="162dp"
+        android:layout_height="162dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="电极1"
+        android:textColor="#219DA3"
+        android:textSize="12sp"
+        app:arcLineColor="#66C1B7"
+        app:arcLineWidth="1dp"
+        app:borderWidth="14dp"
+        app:centerColor="#63B6AD"
+        app:endColor="#49ADA1"
+        app:isShowStep="true"
+        app:startColor="#84C0BC" />
+
+    <View
+        android:id="@+id/cureProgressLine"
+        android:layout_width="240dp"
+        android:layout_height="8dp"
+        android:layout_below="@+id/cureProgressView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-102dp"
+        android:background="@drawable/cure_green_6_corners"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cureProgressView" />
 
     <cn.wwj.customview.widget.LetterSlideBar
         android:id="@+id/tvSlideBar"
@@ -39,8 +59,8 @@
         android:layout_marginVertical="10dp"
         android:textColor="@android:color/holo_blue_light"
         android:textSize="17sp"
-        app:selectTextColor="@color/purple_500"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:selectTextColor="@color/purple_500" />
 
     <TextView
         android:id="@+id/tvSelectLetter"
@@ -55,6 +75,16 @@
         android:textStyle="bold"
         android:visibility="gone"
         tools:text="A" />
+
+    <cn.wwj.customview.widget.TrainTimeView
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:layout_below="@+id/stepView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="300min"
+        android:textColor="#ff47b5a9"
+        android:textSize="12sp" />
 
 
 </RelativeLayout>

@@ -12,9 +12,9 @@ import cn.wwj.customview.dp2px
 
 
 /**
- * 用圆弧/或圆圈统计跑步器
+ * 治疗的进度View
  */
-class StepView : AppCompatTextView {
+class CureProgressView : AppCompatTextView {
 
     /**
      * 开始颜色
@@ -34,11 +34,11 @@ class StepView : AppCompatTextView {
     /**
      * 当前走了多少步
      */
-    private var mCurrentStep: Int = 0
+    var mCurrentStep: Int = 0
 
     /**
      * 最大走多少步,比如两万步 20000步
-     * 默认100步,有个成语50步笑100步
+     * 默认最大100步,有个成语50步笑100步
      */
     private var mMaxStep: Int = 100
 
@@ -54,23 +54,10 @@ class StepView : AppCompatTextView {
             invalidate()
         }
 
-
-    /**
-     * 单位: 如 步  %  等等
-     */
-    var mUnit: String?
-        set(value) {
-            if (field == value) {
-                return
-            }
-            field = value
-            invalidate()
-        }
-
     /**
      * 设置圆弧的边框线宽度
      */
-    var mBorderWidth: Float = dp2px(6F)
+    var mBorderWidth: Float = dp2px(6F) * 1F
         set(value) {
             if (field == value) {
                 return
@@ -80,16 +67,6 @@ class StepView : AppCompatTextView {
             mArcPaint.strokeWidth = field
             invalidate()
         }
-
-    /**
-     * 设置外部圆弧的颜色
-     */
-    private var mOuterColor: Int = resources.getColor(android.R.color.holo_blue_light)
-
-    /**
-     * 设置内部圆弧的颜色
-     */
-    private var mInnerColor: Int = resources.getColor(android.R.color.holo_red_light)
 
     /**
      * 圆弧画笔
@@ -109,7 +86,7 @@ class StepView : AppCompatTextView {
     /**
      * 弧线宽度
      */
-    private var mArcLineWidth = dp2px(1f)
+    private var mArcLineWidth = dp2px(1f) * 1F
 
 
     /**
@@ -126,13 +103,13 @@ class StepView : AppCompatTextView {
     /**
      * 建议圆弧起始角度
      */
-    private val mSuggestionStartAngle = 135F
+    private val mSuggestionStartAngle = 180F
 
 
     /**
      * 建议圆弧从起始角度开始，扫描过的角度
      */
-    private var mSuggestionSweepAngle = mSuggestionStartAngle * 2
+    private var mSuggestionSweepAngle = 180F
 
     /**
      * 圆弧起始角度
@@ -181,19 +158,17 @@ class StepView : AppCompatTextView {
         val appearance = context.obtainStyledAttributes(attrs, R.styleable.StepView)
 
         mBorderWidth = appearance.getDimension(R.styleable.StepView_borderWidth, mBorderWidth)
-        mOuterColor = appearance.getColor(R.styleable.StepView_outColor, mOuterColor)
-        mInnerColor = appearance.getColor(R.styleable.StepView_innerColor, mInnerColor)
+
         mStartColor = appearance.getColor(R.styleable.StepView_startColor, mStartColor)
         mCenterColor = appearance.getColor(R.styleable.StepView_centerColor, mCenterColor)
         mEndColor = appearance.getColor(R.styleable.StepView_endColor, mEndColor)
-        mUnit = appearance.getString(R.styleable.StepView_unit)
+
         mCurrentStep = appearance.getInt(R.styleable.StepView_currentStep, 0)
         mMaxStep = appearance.getInt(R.styleable.StepView_maxStep, mMaxStep)
         mStartAngle = appearance.getFloat(R.styleable.StepView_startAngle, mStartAngle)
         mSweepAngle = appearance.getFloat(R.styleable.StepView_endAngle, mSweepAngle)
         mArcLineColor = appearance.getColor(R.styleable.StepView_arcLineColor, mArcLineColor)
         mArcLineWidth = appearance.getDimension(R.styleable.StepView_arcLineWidth, mArcLineWidth)
-        setIsCircle(appearance.getBoolean(R.styleable.StepView_isCircle, false))
         mIsShowStep = appearance.getBoolean(R.styleable.StepView_isShowStep, mIsShowStep)
 
         appearance.recycle()
@@ -217,14 +192,10 @@ class StepView : AppCompatTextView {
 
         // 当画笔样式为STROKE或FILL_OR_STROKE时，设置笔刷的图形样式，如圆形样式
         // Cap.ROUND(圆形样式)或Cap.SQUARE(方形样式)
-        mArcPaint.strokeCap = Paint.Cap.ROUND
+        mArcPaint.strokeCap = Paint.Cap.SQUARE
 
         // 设置画笔粗细
         mArcPaint.strokeWidth = mBorderWidth
-
-        // 画笔的颜色
-        mArcPaint.color = mOuterColor
-
 
         //------------弧线画笔
         // 抗抖动
@@ -247,7 +218,6 @@ class StepView : AppCompatTextView {
         mArcLinePaint.color = mArcLineColor
         //------------弧线画笔
 
-
         // 画笔的颜色
         mTextPaint.color = currentTextColor
 
@@ -269,12 +239,12 @@ class StepView : AppCompatTextView {
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        Log.d(TAG, "-------------onLayout")
+//        Log.d(TAG, "-------------onLayout")
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        Log.d(TAG, "-------onSizeChanged---w=$w,h=$h")
+//        Log.d(TAG, "-------onSizeChanged---w=$w,h=$h")
         if (mStartColor != -1 && mEndColor != -1) {
             val colorArray = arrayListOf(mStartColor, mCenterColor, mEndColor).toIntArray()
             val linearGradient = LinearGradient(
@@ -294,7 +264,7 @@ class StepView : AppCompatTextView {
         val widthSize = MeasureSpec.getSize(widthMeasureSpec)
         val heightSize = MeasureSpec.getSize(heightMeasureSpec)
 
-        Log.d(TAG, "-------onMeasure---w=$widthSize,h=$heightSize")
+//        Log.d(TAG, "-------onMeasure---w=$widthSize,h=$heightSize")
 
         /**
          * 如果宽度大于高度,取高度
@@ -318,59 +288,42 @@ class StepView : AppCompatTextView {
         mArcRect.setEmpty()
         mTextRect.setEmpty()
 
-        // 圆弧矩形左边距,顶边距,右边距,底边距
-        var left = mBorderWidth / 2
-        var top = mBorderWidth / 2
-        var right = width - mBorderWidth / 2
-        var bottom = height - mBorderWidth / 2
-        mArcRect.set(left, top, right, bottom)
-
-        // 绘制外部圆弧
-//        mArcPaint.color = mOuterColor
-//        canvas?.drawArc(mArcRect, mStartAngle, mSweepAngle, false, mArcPaint)
-
-
         // 绘制外部弧线
-        left = mArcLineWidth / 2
-        top = mArcLineWidth / 2
-        right = width - mArcLineWidth / 2
-        bottom = height - mArcLineWidth / 2
+        var left = mArcLineWidth / 2
+        var top = mArcLineWidth / 2
+        var right = width - mArcLineWidth / 2
+        var bottom = height - mArcLineWidth / 2
+        // 圆弧矩形左边距,顶边距,右边距,底边距
         mArcRect.set(left, top, right, bottom)
         canvas?.drawArc(mArcRect, mStartAngle, mSweepAngle, false, mArcLinePaint)
 
         // 绘制内部弧线
-        left = mArcLineWidth / 2 + dp2px(20F)
-        top = mArcLineWidth / 2 + dp2px(20F)
-        right = width - mArcLineWidth / 2 - dp2px(20F)
-        bottom = height - mArcLineWidth / 2 - dp2px(20F)
+        left = mArcLineWidth / 2 + mBorderWidth
+        top = mArcLineWidth / 2 + mBorderWidth
+        right = width - mArcLineWidth / 2 - mBorderWidth
+        bottom = height - mArcLineWidth / 2 - mBorderWidth
         mArcRect.set(left, top, right, bottom)
         canvas?.drawArc(mArcRect, mStartAngle, mSweepAngle, false, mArcLinePaint)
 
         // 绘制内部部圆弧
         val sweepAngle = mCurrentStep * 1F / mMaxStep * mSweepAngle
-//        mArcPaint.color = mInnerColor
 
-        left = mBorderWidth / 2
-        top = mBorderWidth / 2
-        right = width - mBorderWidth / 2
-        bottom = height - mBorderWidth / 2
+        left = mBorderWidth / 2 + mArcLineWidth
+        top = mBorderWidth / 2 + mArcLineWidth
+
+        right = width - mBorderWidth / 2 - mArcLineWidth
+        bottom = height - mBorderWidth / 2 - mArcLineWidth * 6
         mArcRect.set(left, top, right, bottom)
         canvas?.drawArc(mArcRect, mStartAngle, sweepAngle, false, mArcPaint)
 
-
-        Log.d(TAG, "-------onDraw---mStartAngle=$mStartAngle---sweepAngle=$sweepAngle")
-
+        Log.d(TAG, "-------onDraw()--mCurrentStep=$mCurrentStep,mStartAngle=$mStartAngle,sweepAngle=$sweepAngle")
         if (mIsShowStep) {
-            val stepText = if (mUnit != null) {
-                "$mCurrentStep $mUnit"
-            } else {
-                mCurrentStep.toString()
-            }
+            val stepText = "$text"
 
             // 获取文本的宽高
             mTextPaint.getTextBounds(stepText, 0, stepText.length, mTextRect)
             val textX = width / 2F - mTextRect.width() / 2
-            val textY = height / 2F + getBaseline(mTextPaint)
+            val textY = height / 3F + getBaseline(mTextPaint)
             // 绘制文本,第二个参数文本的起始索引,第三个参数要绘制的文字长度
             // 开始绘制文字的x 坐标 y 坐标
             canvas?.drawText(stepText, 0, stepText.length, textX, textY, mTextPaint)
@@ -390,10 +343,9 @@ class StepView : AppCompatTextView {
         valueAnimator?.interpolator = AccelerateInterpolator()
         valueAnimator?.addUpdateListener {
             mCurrentStep = it.animatedValue as Int
-            Log.d(TAG, "------$mCurrentStep")
             invalidate()
         }
-        valueAnimator?.startDelay = 10
+        valueAnimator?.startDelay = 0
         valueAnimator?.start()
     }
 
@@ -403,6 +355,11 @@ class StepView : AppCompatTextView {
      */
     fun setMaxStep(maxStep: Int, duration: Long = 0) {
         mMaxStep = maxStep
+        if (0L == duration) {
+            Log.d(TAG, "------mMaxStep=$mMaxStep")
+            invalidate()
+            return
+        }
         val progress = (mCurrentStep * 1F / mMaxStep * 100).toInt()
         setProgress(progress, duration)
     }
@@ -410,51 +367,18 @@ class StepView : AppCompatTextView {
     /**
      * @param currentStep 当前走了多少步
      * @param duration 默认动画时长200
+     * 如果动画时长0,直接刷新界面
      */
-    fun setCurrentStep(currentStep: Int, duration: Long = 200) {
+    fun setCurrentStep(currentStep: Int, duration: Long = 0) {
         mCurrentStep = currentStep
+        if (0L == duration) {
+            Log.d(TAG, "------$mCurrentStep")
+            invalidate()
+            return
+        }
+
         val progress = (mCurrentStep * 1F / mMaxStep * 100).toInt()
         setProgress(progress, duration)
-    }
-
-    /**
-     * @param outerColor
-     * 设置外部圆弧的颜色
-     */
-    fun setOuterColor(outerColor: Int) {
-        if (mOuterColor == outerColor) {
-            return
-        }
-        mOuterColor = outerColor
-        invalidate()
-    }
-
-    /**
-     * @param outerColor
-     * 设置外部圆弧的颜色
-     */
-    fun setInnerColor(innerColor: Int) {
-        if (mInnerColor == innerColor) {
-            return
-        }
-        mInnerColor = innerColor
-        invalidate()
-    }
-
-    /**
-     * 设置是否是圆圈
-     */
-    fun setIsCircle(isCircle: Boolean = false) {
-        if (isCircle == mIsCircle) {
-            return
-        }
-        this.mIsCircle = isCircle
-        if (isCircle) {
-            mStartAngle = 0F
-            // 超过360度,变为一个圆圈
-            mSweepAngle = 360F
-        }
-        invalidate()
     }
 
     /**
