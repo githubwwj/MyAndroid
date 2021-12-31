@@ -1,7 +1,11 @@
 package cn.wwj.customview
 
+import android.annotation.SuppressLint
+import android.content.ComponentName
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.wwj.customview.databinding.ActivityMainBinding
 import cn.wwj.customview.widget.LetterSlideBar
@@ -16,9 +20,19 @@ class MainActivity : AppCompatActivity() {
     private var isCircle = false
 
 
+    @SuppressLint("QueryPermissionsNeeded")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        val intent = Intent("com.test.intentfilter")
+//        intent.addCategory(Intent.CATEGORY_DEFAULT)
+        val resolveActivity = intent.resolveActivity(packageManager)
+        if (null != resolveActivity) {
+            startActivity(intent)
+        } else {
+            Toast.makeText(this, "未找到Activity", Toast.LENGTH_SHORT).show()
+        }
 
         binding.stepView.setOnClickListener {
             mProgress += 50
