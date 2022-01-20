@@ -8,8 +8,6 @@ import kotlin.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val mainVM: MainVM by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
