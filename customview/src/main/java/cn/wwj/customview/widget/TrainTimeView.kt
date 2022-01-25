@@ -9,6 +9,7 @@ import android.text.TextPaint
 import android.util.AttributeSet
 import android.util.Log
 import android.util.TypedValue
+import android.view.MotionEvent
 import androidx.appcompat.widget.AppCompatTextView
 import cn.wwj.customview.R
 import cn.wwj.customview.sp2px
@@ -75,7 +76,7 @@ class TrainTimeView : AppCompatTextView {
     /**
      * 设置左边宽度（也就是减号的宽度）
      */
-    var mLeftWidth: Float = dp2px(18F)
+    var mLeftWidth: Float = dp2px(28F)
         set(value) {
             if (field == value) {
                 return
@@ -87,7 +88,7 @@ class TrainTimeView : AppCompatTextView {
     /**
      * 设置中间宽度 （30min）
      */
-    var mCenterWidth: Float = dp2px(46F)
+    var mCenterWidth: Float = dp2px(40F)
         set(value) {
             if (field == value) {
                 return
@@ -100,7 +101,7 @@ class TrainTimeView : AppCompatTextView {
     /**
      * 设置右边宽度
      */
-    var mRightWidth: Float = dp2px(18F)
+    var mRightWidth: Float = dp2px(28F)
         set(value) {
             if (field == value) {
                 return
@@ -182,7 +183,7 @@ class TrainTimeView : AppCompatTextView {
         val oldTextSize = textSize
 
         // 重新计算左边最小宽高
-        mTextPaint.textSize = sp2px(16F, resources)
+        mTextPaint.textSize = sp2px(16F)
         mTextPaint.getTextBounds(leftText, 0, leftText.length, mTextRect)
         val leftWidth = mTextRect.width() + dp2px(12F)
         if (mLeftWidth < leftWidth) {
@@ -205,7 +206,7 @@ class TrainTimeView : AppCompatTextView {
         }
 
         // 重新计算右边最小宽高
-        mTextPaint.textSize = sp2px(14F, resources)
+        mTextPaint.textSize = sp2px(14F)
         mTextPaint.getTextBounds(rightText, 0, rightText.length, mTextRect)
         val rightWidth = mTextRect.width() + dp2px(12F)
         if (mRightWidth < rightWidth) {
@@ -230,7 +231,7 @@ class TrainTimeView : AppCompatTextView {
         canvas?.drawRect(rectF, mBorderPaint)
 
         // 得到左边文字的宽高
-        mTextPaint.textSize = sp2px(16F, resources)
+        mTextPaint.textSize = sp2px(16F)
         mTextPaint.getTextBounds(leftText, 0, leftText.length, mTextRect)
         var textX = mLeftWidth / 2F - mTextRect.width() / 2
         var textY = height / 2F + getBaseline(mTextPaint)
@@ -256,12 +257,46 @@ class TrainTimeView : AppCompatTextView {
         )
 
         // 得到右边文字的宽高
-        mTextPaint.textSize = sp2px(14F, resources)
+        mTextPaint.textSize = sp2px(14F)
         mTextPaint.getTextBounds(rightText, 0, rightText.length, mTextRect)
         textX = mLeftWidth + mCenterWidth + mRightWidth / 2F - mTextRect.width() / 2
         textY = height / 2F + getBaseline(mTextPaint)
         // 绘制右边的文本
         canvas?.drawText(rightText, 0, rightText.length, textX, textY, mTextPaint)
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (event?.action == MotionEvent.ACTION_DOWN) {
+            return true
+        }
+        if (!this::mClickPosition.isInitialized) {
+            return super.onTouchEvent(event)
+        }
+        if (event?.action == MotionEvent.ACTION_UP) {
+            when (event.x) {
+                in 0F..mLeftWidth -> {
+                    mClickPosition(ClickPosition.LEFT)
+                }
+                in mLeftWidth..(mLeftWidth + mCenterWidth) -> {
+                    mClickPosition(ClickPosition.CENTER)
+                }
+                in (mLeftWidth + mCenterWidth)..(mLeftWidth + mCenterWidth + mRightWidth) -> {
+                    mClickPosition(ClickPosition.RIGHT)
+                }
+            }
+            return true
+        }
+        return super.onTouchEvent(event)
+    }
+
+    private lateinit var mClickPosition: (ClickPosition) -> Unit
+
+    fun setOnClickPositionListener(clickPosition: (ClickPosition) -> Unit) {
+        this.mClickPosition = clickPosition
+    }
+
+    enum class ClickPosition {
+        LEFT, CENTER, RIGHT
     }
 
     /**
@@ -280,4 +315,13 @@ class TrainTimeView : AppCompatTextView {
             TypedValue.COMPLEX_UNIT_DIP, value, resources.displayMetrics
         )
     }
+
+
+    fun sp2px(value: Float): Float {
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_SP, value, resources.displayMetrics
+        )
+    }
+
+
 }
