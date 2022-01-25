@@ -1,9 +1,17 @@
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/google' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/gradle-plugin' }
         google()
+        jcenter()
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
+        maven { url "https://jitpack.io" }
+        maven {
+            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
     }
 }
 rootProject.name = "MyAndroid"
@@ -12,3 +20,5 @@ include ':mytouchevent'
 include ':customview'
 include ':wordalign'
 include ':wordalign:library'
+include ':compose'
+include ':cououtines'
