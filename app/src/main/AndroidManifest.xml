@@ -29,6 +29,11 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".TestService"
+            android:process="cn.wen">
+        </service>
+
     </application>
 
 </manifest>

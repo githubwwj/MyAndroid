@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyAndroid">
         <activity
-            android:name=".MainActivity"
+            android:name=".TestCoroutinesActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
