@@ -1,14 +1,10 @@
 package cn.wwj.customview
 
 import android.animation.ValueAnimator
-import android.annotation.SuppressLint
-import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateInterpolator
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.wwj.customview.databinding.ActivityMainBinding
 import cn.wwj.customview.widget.LetterSlideBar
@@ -36,8 +32,6 @@ class MainActivity : AppCompatActivity() {
         }
         binding.cureProgressView.setMaxStep(30)
 
-
-
         binding.tvSlideBar.setOnLetterTouchListener(object : LetterSlideBar.LetterTouchListener {
             override fun setLetterTouchListener(letter: String?) {
                 if (letter.isNullOrEmpty()) {
@@ -50,7 +44,8 @@ class MainActivity : AppCompatActivity() {
         })
 
 //        startActivity(Intent(this,WaveRippleActivity::class.java))
-//        finish()
+        startActivity(Intent(this, BioFeedBackActivity::class.java))
+        finish()
 
     }
 

@@ -20,6 +20,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".WaveRippleActivity" />
+        <activity
+            android:name=".BioFeedBackActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

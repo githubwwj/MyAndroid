@@ -11,8 +11,8 @@ fun dp2px(value: Float): Float {
 }
 
 
-fun sp2px(value: Float, resources: Resources): Float {
+fun sp2px(value: Float): Float {
     return TypedValue.applyDimension(
-        TypedValue.COMPLEX_UNIT_SP, value, resources.displayMetrics
+        TypedValue.COMPLEX_UNIT_SP, value, Resources.getSystem().displayMetrics
     )
 }

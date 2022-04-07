@@ -9,4 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="light_gray">#D5D5D5</color>
     <color name="wave">#B6E9E0</color>
+    <color name="bioBorderLineColor">#D1D1D1</color>
+    <color name="bioTextColor">#ff666666</color>
+    <color name="bioCommitTextColor">#717071</color>
+    <color name="bioTitleColor">#060001</color>
+    <color name="bioBottomFirstLineColor">#C9161E</color>
+    <color name="bioBottomSecondLineColor">#3881C3</color>
 </resources>

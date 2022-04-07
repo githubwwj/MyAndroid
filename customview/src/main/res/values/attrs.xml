@@ -44,4 +44,17 @@
         <attr name="waveBorderWidth" format="dimension" />
         <attr name="waveRadius" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="BioFeedbackView">
+        <attr name="bioBorderLineColor" format="color" />
+        <attr name="bioTextColor" format="color" />
+        <attr name="bioTitleColor" format="color" />
+        <attr name="bioTitle" format="string" />
+        <attr name="bioCommitTextColor" format="color" />
+        <attr name="bioBottomFirstLineColor" format="color" />
+        <attr name="bioBottomSecondLineColor" format="color" />
+        <attr name="bioBorderWidth" format="dimension" />
+        <attr name="bioOffsetY" format="dimension" />
+        <attr name="bioIsDrawVerticalLine" format="boolean" />
+    </declare-styleable>
 </resources>
