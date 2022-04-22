@@ -526,7 +526,7 @@ class BioFeedbackView : AppCompatImageView {
             }
 
             // 计算出y坐标
-            var y =
+            val y =
                 useHeight - (mRealValue - mMinValue) / (mMaxValue - mMinValue) * useHeight - mBorderLineWidth / 2 + mOffsetTopY
 
 

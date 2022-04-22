@@ -57,4 +57,19 @@
         <attr name="bioOffsetY" format="dimension" />
         <attr name="bioIsDrawVerticalLine" format="boolean" />
     </declare-styleable>
+
+
+    <declare-styleable name="NodePointProcessBar">
+        <attr name="completedTextColor" format="color" />
+        <attr name="processTextColor" format="color" />
+        <attr name="waitProcessTextColor" format="color" />
+        <attr name="textCircleMargin" format="dimension" />
+        <attr name="textLeftRightMargin" format="dimension" />
+        <attr name="npbCircleRadius" format="dimension" />
+        <attr name="circleBorder" format="dimension" />
+        <attr name="lineWidth" format="dimension" />
+        <attr name="lineMargin" format="dimension" />
+        <attr name="isDebug" format="boolean" />
+    </declare-styleable>
+
 </resources>

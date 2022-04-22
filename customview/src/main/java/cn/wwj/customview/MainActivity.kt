@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
         })
 
 //        startActivity(Intent(this,WaveRippleActivity::class.java))
-        startActivity(Intent(this, BioFeedBackActivity::class.java))
+//        startActivity(Intent(this, BioFeedBackActivity::class.java))
+        startActivity(Intent(this, NodeProgressBarActivity::class.java))
         finish()
 
     }

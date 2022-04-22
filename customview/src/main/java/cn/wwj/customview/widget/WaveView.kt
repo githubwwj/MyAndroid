@@ -145,8 +145,7 @@ class WaveView : AppCompatImageView {
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
-        //最小半径 =  图片宽度的一半 减去 波浪线宽度的一半
-        // 或者波浪线的一半
+        //最小半径 =  图片宽度的一半 加上 波浪线宽度的一半
         mMinRadius = if (drawable != null) {
             drawable.intrinsicWidth.toFloat() / 2 + mWaveBorderWidth / 2
         } else {
