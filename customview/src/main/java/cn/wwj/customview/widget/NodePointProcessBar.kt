@@ -101,7 +101,7 @@ class NodePointProcessBar : AppCompatTextView {
     /**
      * 选中项集合
      */
-    private var mSelectedIndexSet: Set<Int> = mutableSetOf()
+    private var mProcessIndexSet: Set<Int> = mutableSetOf()
 
     /**
      * 文字同宽高的矩形，用来测量文字
@@ -157,7 +157,7 @@ class NodePointProcessBar : AppCompatTextView {
             R.styleable.NodePointProcessBar_lineMargin, mLineMargin
         )
         initPaint()
-        show(mTextList, mSelectedIndexSet)
+        setNodeData(mTextList, mProcessIndexSet)
     }
 
     /**
@@ -219,14 +219,15 @@ class NodePointProcessBar : AppCompatTextView {
     }
 
     /**
-     * 获取内容的高度
+     * 获取内容的高度,如果控件的宽度小于内容的宽度,意味着一行放不下了,文字的大小减小1sp,重新测量文字的宽高,重新
      */
     private fun calcContentWidthHeight() {
+        // 一开始没有传递文字的
         mContentHeight = if (mTextBoundList.isNotEmpty()) {
             mCircleRadius * 2 + mTextCircleMargin + mRect.height() + getBaseline(mTextPaint)
         } else {
             mTextPaint.getTextBounds("中", 0, 1, mRect)
-            mCircleRadius * 2 + mTextCircleMargin + +mRect.height() + getBaseline(mTextPaint)
+            mCircleRadius * 2 + mTextCircleMargin + mRect.height() + getBaseline(mTextPaint)
         }
         if (measuredWidth == 0 || mTextBoundList.isEmpty()) {
             return
@@ -236,14 +237,14 @@ class NodePointProcessBar : AppCompatTextView {
             mContentWidth += rect.width()
         }
         Log.d(TAG, "---------------measuredWidth=$measuredWidth,mContentWidth=$mContentWidth")
+        // 如果控件的宽度小于内容的宽度加文本的边距,意味着一行放不下了,文字的大小减小1sp,重新测量文字的宽高后,设置控件得高度
+        // 如果控件的宽度大于内容的宽度加文本的边距,意味着一行放得下,设置控件得高度
         if (measuredWidth - mContentWidth < (mTextLeftRightMargin * (mTextList.size - 1))) {
             mTextPaint.textSize = mTextPaint.textSize - 1f.sp2px()
             measureText()
             calcContentWidthHeight()
             return
         }
-        mTextLeftRightMargin =
-            (measuredWidth - mContentWidth) / if (mTextBoundList.size - 1 == 0) 1 else mTextBoundList.size - 1
         setMeasuredDimension(measuredWidth, mContentHeight.toInt())
     }
 
@@ -261,23 +262,22 @@ class NodePointProcessBar : AppCompatTextView {
         mCirclePaint.strokeWidth = mCircleBorder
         //绘制文字和圆形
         for (i in 0 until mCircleCount) {
-            // 正在处理
-            if (mSelectedIndexSet.contains(i)) {
+            if (mProcessIndexSet.contains(i)) {
                 // 正在处理中
-                if (mSelectedIndexSet.size == i + 1) {
+                if (mProcessIndexSet.size == i + 1) {
                     mCirclePaint.style = Paint.Style.FILL
                     // 正在处理中的文字颜色
                     mTextPaint.color = mProcessTextColor
                     mCirclePaint.color = mProcessTextColor
-                } else { //已经处理过了==>过去
-                    //已经处理过的圆圈空心
+                } else {
+                    //处理完成圆圈空心
                     mCirclePaint.style = Paint.Style.STROKE
-                    // 已经处理过的文字颜色
+                    //处理完成文字颜色
                     mTextPaint.color = mCompleteTextColor
                     mCirclePaint.color = mProcessTextColor
                 }
             } else {
-                //未处理中
+                //待处理
                 mCirclePaint.color = mWaitProcessTextColor
                 mCirclePaint.style = Paint.Style.FILL
                 mTextPaint.color = mWaitProcessTextColor
@@ -309,17 +309,18 @@ class NodePointProcessBar : AppCompatTextView {
             // 画线,两个圆圈之间一条线段
             mCirclePaint.strokeWidth = mLineWidth
             if (i < mCircleCount - 1) {
-                //选中的线颜色
-                if (mSelectedIndexSet.contains(i + 1)) {
+                //已经处理过的线颜色
+                if (mProcessIndexSet.contains(i + 1)) {
                     mCirclePaint.color = mProcessTextColor
                 } else {
-                    // 未选中线的颜色
+                    // 待处理的线段颜色
                     mCirclePaint.color = mWaitProcessTextColor
                 }
                 // 线段起始 x 坐标
                 val lineStartX = itemWidth * i + itemWidth / 2f + mCircleRadius + mLineMargin
                 // 线段结束 x 坐标
-                val lineEndX = itemWidth * i + itemWidth + itemWidth / 2f - mCircleRadius - mLineMargin
+                val lineEndX =
+                    itemWidth * i + itemWidth + itemWidth / 2f - mCircleRadius - mLineMargin
                 canvas.drawLine(
                     lineStartX,
                     circleY,
@@ -344,13 +345,13 @@ class NodePointProcessBar : AppCompatTextView {
     }
 
     /**
-     * 供外部调用，显示控件
-     * @param titles 底部标题内容列表
-     * @param indexSet 选中项Set
+     * 供外部调用，展示内容
+     * @param titles 要展示的内容列表
+     * @param progressIndexSet 节点选中项集合
      */
-    fun show(titles: List<String>, indexSet: Set<Int>) {
+    fun setNodeData(titles: List<String>, progressIndexSet: Set<Int>) {
         mTextList = titles
-        mSelectedIndexSet = indexSet
+        mProcessIndexSet = progressIndexSet
         measureText()
         calcContentWidthHeight()
         invalidate()

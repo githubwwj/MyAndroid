@@ -5,15 +5,21 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import cn.wwj.customview.widget.NodePointProcessBar
-import cn.wwj.customview.widget.WaveView
 
 /**
  * 节点进度Activity
  */
 class NodeProgressBarActivity : AppCompatActivity() {
 
+    /**
+     * 数据结合
+     */
     private val mTextList: List<String> = mutableListOf("提交申请", "商家处理", "寄回商品", "商家退款", "退款成功")
-    private var mSelectedIndexSet: Set<Int> = mutableSetOf(0, 1)
+
+    /**
+     * 正在处理的节点索引结合
+     */
+    private var mProgressIndexSet: Set<Int> = mutableSetOf(0, 1,2,3,4,6)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,7 +27,7 @@ class NodeProgressBarActivity : AppCompatActivity() {
         val nodePointPb: NodePointProcessBar = findViewById(R.id.nodePointPb)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            nodePointPb.show(mTextList, mSelectedIndexSet)
+            nodePointPb.setNodeData(mTextList, mProgressIndexSet)
         }, 1000)
     }
 }
