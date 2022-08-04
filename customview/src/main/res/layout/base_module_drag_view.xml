@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:id="@+id/drag_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+        <!--common_icon_default-->
+        <ImageView
+            android:id="@+id/drag_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@color/teal_200"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/close_btn"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="4dp"
+            android:scaleType="fitXY"
+            tools:src="@drawable/base_module_plugin_close" />
+
+    </LinearLayout>
+
+</FrameLayout>
